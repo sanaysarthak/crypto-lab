@@ -44,7 +44,7 @@ def decrypt(cipher_text, key):
 
         # special characters remains unchanged
         else:
-            cipher_text += char
+            plain_text += char
 
     return plain_text
 

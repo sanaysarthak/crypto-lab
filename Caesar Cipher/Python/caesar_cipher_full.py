@@ -64,7 +64,7 @@ while (ch!=0):
 
                 # special characters remains unchanged
                 else:
-                    cipher_text += char
+                    plain_text += char
 
             print("Cipher Text: ", cipher_text)
             print("Plain Text:  ", plain_text)

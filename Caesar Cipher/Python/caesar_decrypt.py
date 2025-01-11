@@ -22,7 +22,7 @@ for i in range(0, len(cipher_text)):
 
     # special characters remains unchanged
     else:
-        cipher_text += char
+        plain_text += char
 
 print("Cipher Text:	", cipher_text)
 print("Plain Text:	", plain_text)
