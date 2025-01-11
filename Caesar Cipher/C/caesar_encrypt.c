@@ -7,43 +7,41 @@ int main() {
     char cipher_text[100];
     int i;
 
-    // Input plain text
     printf("Enter plain text: ");
     scanf("%s", plain_text);
 
-    // Input key
     printf("Enter key: ");
     scanf("%d", &key);
 
-    // Encrypting the plain text
+    // encrypting the plain text
     for (i = 0; plain_text[i] != '\0'; i++) {
         char char_current = plain_text[i];
 
-        // To add blank space
+        // to add blank space
         if (char_current == ' ') {
             cipher_text[i] = char_current;
             continue;
         }
 
-        // For upper-case characters
+        // for upper-case characters
         if (isupper(char_current)) {
             cipher_text[i] = (char)((((char_current - 'A') + key) % 26) + 'A');
         }
 
-        // For lower-case characters
+        // for lower-case characters
         else if (islower(char_current)) {
             cipher_text[i] = (char)((((char_current - 'a') + key) % 26) + 'a');
         } 
 
-        // Non-alphabetic characters remain unchanged
+        // special characters remain unchanged
         else {
             cipher_text[i] = char_current; 
         }
     }
 
-    cipher_text[i] = '\0'; // Adding null-termination at the end of cipher_text string
+    cipher_text[i] = '\0'; // adding null-termination at the end of cipher_text string
 
-    // Display the output
+    // displaying the output
     printf("Plain Text:  %s\n", plain_text);
     printf("Cipher Text: %s\n", cipher_text);
 
