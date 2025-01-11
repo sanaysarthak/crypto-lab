@@ -13,12 +13,16 @@ for i in range(0, len(plain_text)):
         continue
 
     # for upper-case characters
-    if (char.isupper()):
+    elif (char.isupper()):
         cipher_text += chr((ord(char) + key-65) % 26 + 65)
 
     # for lower-case characters
-    if (char.islower()):
+    elif (char.islower()):
         cipher_text += chr((ord(char) + key-97) % 26 + 97)
+
+    # special characters remains unchanged
+    else:
+        cipher_text += char
 
 print("Plain Text:  ", plain_text)
 print("Cipher Text: ", cipher_text)

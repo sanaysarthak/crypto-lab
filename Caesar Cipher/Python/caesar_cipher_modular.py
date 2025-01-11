@@ -2,25 +2,32 @@
 
 def encrypt(plain_text, key):
     cipher_text = ""
+
     for char in plain_text:
+
         # to add blank space
         if char == ' ':
             cipher_text += char
             continue
 
         # for upper-case characters
-        if char.isupper():
+        elif char.isupper():
             cipher_text += chr((ord(char) + key - 65) % 26 + 65)
 
         # for lower-case characters
         elif char.islower():
             cipher_text += chr((ord(char) + key - 97) % 26 + 97)
 
+        # special characters remains unchanged
+        else:
+            cipher_text += char
+
     return cipher_text
 
 
 def decrypt(cipher_text, key):
     plain_text = ""
+
     for char in cipher_text:
         # to add blank space
         if char == ' ':
@@ -28,12 +35,16 @@ def decrypt(cipher_text, key):
             continue
 
         # for upper-case characters
-        if char.isupper():
+        elif char.isupper():
             plain_text += chr((ord(char) - key - 65) % 26 + 65)
 
         # for lower-case characters
         elif char.islower():
             plain_text += chr((ord(char) - key - 97) % 26 + 97)
+
+        # special characters remains unchanged
+        else:
+            cipher_text += char
 
     return plain_text
 
@@ -69,4 +80,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-  
