@@ -67,7 +67,7 @@ while (ch!=0):
                     plain_text += char
 
             print("Cipher Text: ", cipher_text)
-            print("Plain Text:  ", plain_text)
+            print("Plain Text:  ", plain_text, "\n")
 
 
         case 0:
