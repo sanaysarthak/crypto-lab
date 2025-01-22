@@ -65,12 +65,27 @@ for char in alphabets:
 print(matrix)
 
 
-
-# Encryption Process (Splitting -> Add Filler if needed -> Encrypt according to rules)
-
-# Check if adding filler is needed or not
+# Checking and appending the filler word ('X') as per need in between and at the end of plain_text
 i = 0
-# while i < len(plain_text):
+while i < len(plain_text):
+	substring = plain_text[i:i+2]
+	if (substring[0] == substring[1]):
+		first_half = plain_text[:i+1]
+		first_half += "X"
+		second_half = plain_text[i+1:]
+		plain_text = first_half + second_half
+	i += 2
+
+	if (i+2 == len(plain_text)):
+		continue
+
+	if (i+1 == len(plain_text)):
+		plain_text += "X"
+		break
+
+print(plain_text)
 	
 
-# Split the plain-text in pairs and also implement both rules for filler word (repetition and singleton at end)
+# Encryption process:-
+# Split the plain-text in pairs and check which rule to apply and encrypt accordingly
+# Rules are: (same column, same row, different row & column -> rectangular rule)
