@@ -62,8 +62,16 @@ for char in alphabets:
 		used_char.append(char)
 		j += 1
 
-print(matrix)
+# print(matrix)
 
+# Displaying the 5*5 matrix
+print("\n+---+---+---+---+---+")
+for row in matrix:
+	row_string = "|"
+	for num in row:
+		row_string += f" {num} " + "|"
+	print(row_string)
+	print("+---+---+---+---+---+")
 
 # Checking and appending the filler word ('X') as per need in between and at the end of plain_text
 i = 0
@@ -83,7 +91,7 @@ while i < len(plain_text):
 		plain_text += "X"
 		break
 
-print(plain_text)
+print("\n", plain_text)
 	
 
 # Encryption process:-
