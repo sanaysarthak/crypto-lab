@@ -1,16 +1,16 @@
 # Program in Python to implement encryption using the Playfair Cipher
 
-# Take user input
-plain_text = str(input("Enter plain-text: "))
+# Taking user input
+plain_text = str(input("\nEnter plain-text: "))
 keyword = str(input("Enter keyword: "))
 
-# Convert the input text into upper-case and replace I with J 
+# Converting the input text into upper-case and replace I with J 
 plain_text = plain_text.upper()
 keyword = keyword.upper()
 plain_text = plain_text.replace('J', 'I')
-plain_text = plain_text.replace(" ", "") # remove all blank-spaces
+plain_text = plain_text.replace(" ", "") # to remove all blank-spaces
 
-# Create the 5x5 matrix based on the keyword
+# Creating the 5x5 matrix based on the keyword
 matrix = [[], [], [], [], []] # empty list
 
 # Note: we are omitting j completely for implementation purposes
@@ -91,9 +91,53 @@ while i < len(plain_text):
 		plain_text += "X"
 		break
 
-print("\n", plain_text)
+# print("\n", plain_text)
 	
+
 
 # Encryption process:-
 # Split the plain-text in pairs and check which rule to apply and encrypt accordingly
-# Rules are: (same column, same row, different row & column -> rectangular rule)
+# Rules are: (same column, same row, different row & column -> rectangular replacement rule)
+
+
+# Encryption process:-
+
+i = 0
+cipher_text = ""
+
+while i < len(plain_text):
+	# getting pair of characters on each iteration
+    char1 = plain_text[i]
+    char2 = plain_text[i+1]
+    
+    row1, col1, row2, col2 = -1, -1, -1, -1 # intializing positions in the matrix
+
+    # loop to find position of the characters
+    for r in range(5):
+        for c in range(5):
+            if matrix[r][c] == char1:
+                row1, col1 = r, c
+            if matrix[r][c] == char2:
+                row2, col2 = r, c
+
+    # Applying different rules
+    
+    # Same row rule            
+    if row1 == row2:
+        cipher_text += matrix[row1][(col1 + 1) % 5]
+        cipher_text += matrix[row2][(col2 + 1) % 5]
+
+    # Same column rule    
+    elif col1 == col2:
+        cipher_text += matrix[(row1 + 1) % 5][col1]
+        cipher_text += matrix[(row2 + 1) % 5][col2]
+    
+    # Different row and column rule
+    else:
+        cipher_text += matrix[row1][col2]
+        cipher_text += matrix[row2][col1]
+    
+    i += 2
+
+print("\nPlain Text:\t", plain_text)
+print("Cipher Text:\t", cipher_text, "\n")
