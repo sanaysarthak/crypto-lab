@@ -1,0 +1,37 @@
+repeat
+  print menu
+  read ch
+  if ch == 1 then
+    read plain_text
+    read key
+    cipher_text = ""
+    for each c in plain_text do
+      if isUpper(c) then
+        cipher_text += ( (c-'A'+key) mod 26 ) + 'A'
+      else if isLower(c) then
+        cipher_text += ( (c-'a'+key) mod 26 ) + 'a'
+      else
+        cipher_text += c
+    end for
+    print cipher_text
+
+  else if ch == 2 then
+    read cipher_text
+    read key
+    plain_text = ""
+    for each c in cipher_text do
+      if isUpper(c) then
+        plain_text += ( (c-'A'-key+26) mod 26 ) + 'A'
+      else if isLower(c) then
+        plain_text += ( (c-'a'-key+26) mod 26 ) + 'a'
+      else
+        plain_text += c
+    end for
+    print plain_text
+
+  else if ch == 0 then
+    exit loop
+  else
+    print "Invalid choice"
+  end if
+until ch == 0

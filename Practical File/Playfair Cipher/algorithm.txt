@@ -1,0 +1,28 @@
+1. Build 5×5 Key Matrix:
+   - Uppercase keyword, replace J→I, remove duplicates.
+   - Fill matrix left→right, top→bottom with keyword letters.
+   - Fill remaining cells with A to Z (skip J and used letters).
+
+2. Prepare Plaintext:
+   - Uppercase, replace J→I, remove spaces.
+   - Insert 'X' between repeated letters in each pair.
+   - If the length is odd, append 'X'.
+
+3. Encrypt Digraphs:
+   For each pair (A, B) in prepared text:
+     - Find (r1,c1) for A, (r2,c2) for B in the matrix.
+     - If same row: replace with letters to their right (wrap around).
+     - Else if same column: replace with letters below (wrap around).
+     - Else: replace with letters at the opposite corners of the rectangle.
+
+4. Decrypt Digraphs:
+   For each pair (C, D) in cipher text:
+     - Find positions as above.
+     - If the same row: replace with letters to their left (wrap around).
+     - Else if same column: replace with letters above (wrap around).
+     - Else: swap columns as in encryption.
+
+5. Menu Loop:
+   - 1: Encrypt → input plaintext & keyword → show matrix → output cipher.
+   - 2: Decrypt → input ciphertext & keyword → show matrix → output plaintext.
+   - 0: Exit.

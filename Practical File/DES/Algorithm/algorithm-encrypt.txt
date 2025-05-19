@@ -1,0 +1,49 @@
+print menu
+read plaintext
+read key
+
+if key length ≠ 8 then
+    error “Key must be 8 characters”
+    exit
+
+// Pad plaintext to a multiple of 8 bytes (PKCS5 style)
+pad_len = 8 − (length(plaintext) mod 8)
+plaintext += chr(pad_len) × pad_len
+
+// Generate the 16 round keys
+round_keys = []
+key_bits = permute(string_to_bits(key), PC1)
+L, R = split(key_bits, 28)
+for each shift in shift_schedule do
+    L = left_shift(L, shift)
+    R = left_shift(R, shift)
+    round_keys.append( permute(L + R, PC2) )
+end for
+
+ciphertext = “”
+
+// Process each 8‑byte block
+for each block in split(plaintext, 8 bytes) do
+    bits = string_to_bits(block)
+    bits = permute(bits, IP)
+
+    L = bits[0..31]
+    R = bits[32..63]
+
+    // 16 Feistel rounds
+    for i = 1 to 16 do
+        E = permute(R, E_BOX)
+        X = xor(E, round_keys[i])
+        S = apply_sboxes(X)
+        P = permute(S, P_BOX)
+        L, R = R, xor(L, P)
+    end for
+
+    // Swap and final permutation
+    preout = R + L
+    cipher_bits = permute(preout, IP_INVERSE)
+    ciphertext += bits_to_string(cipher_bits)
+end for
+
+hex_output = bytes_to_hex(ciphertext)
+print hex_output

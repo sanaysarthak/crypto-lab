@@ -1,0 +1,43 @@
+print "Diffie-Hellman Key Exchange"
+read sender_name
+read receiver_name
+
+read p
+if p < 2 then 
+   error 
+end if
+
+read g
+if g ≤ 1 or g ≥ p or not is_primitive_root(g,p) then 
+    error 
+end if
+
+read sender_priv
+read receiver_priv
+if sender_priv ≤ 0 or sender_priv ≥ p or receiver_priv ≤ 0 or receiver_priv ≥ p then 
+    error
+end if
+
+sender_pub -= mod_exp(g, sender_priv, p)
+receiver_pub = mod_exp(g, receiver_priv, p)
+sender_shared = mod_exp(receiver_pub, sender_priv, p)
+receiver_shared = mod_exp(sender_pub, receiver_priv, p)
+
+print sender_name + " pub:", sender_pub
+print receiver_name + " pub:", receiver_pub
+print sender_name + " shared:", sender_shared
+print receiver_name + " shared:", receiver_shared
+
+if sender_shared == receiver_shared then
+    print "Shared key established"
+else
+    print "Error: keys mismatch"
+end if
+
+function mod_exp(b, e, m) 
+    return b^e mod m 
+end function
+
+function is_primitive_root(g, p) 
+    return {g^k mod p | k←1..p–1} == {1..p–1} 
+end function

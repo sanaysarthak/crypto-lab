@@ -1,0 +1,39 @@
+repeat
+print menu
+read ch
+
+if ch == 1 then
+    read plain_text
+    read depth
+    text = remove spaces from plain_text
+    // build rails
+    rails = array of depth empty strings
+    row = 0; dir = 1
+    for each c in text do
+        rails[row] += c
+        if row == 0 then 
+dir = 1
+        else if row == depth - 1 then dir = -1
+        	row += dir
+    end for
+    cipher_text = join rails with spaces
+    print cipher_text
+
+else if ch == 2 then
+    read cipher_text
+    read depth
+    rails_str = split cipher_text by spaces
+    // reconstruct zig-zag
+    length = total characters in rails_str
+    mark zigzag positions in matrix[depth][length]
+    fill matrix row by row from rails_str
+    plain_text = read matrix in zigzag order
+    print plain_text
+
+else if ch == 0 then
+    exit loop
+
+else
+    print "Invalid choice"
+end if
+until ch == 0

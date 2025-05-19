@@ -1,0 +1,46 @@
+BEGIN
+
+  DISPLAY menu
+  INPUT ciphertext (in hex)
+  INPUT key (must be 8 characters)
+  
+  IF LENGTH(key) ≠ 8 THEN
+    DISPLAY "Key must be 8 characters long"
+    EXIT
+  ENDIF
+
+  raw ← hex_to_string(ciphertext)
+  key_bits ← permute(string_to_bits(key), PC1)
+  L, R ← split(key_bits, 28)
+
+  round_keys ← EMPTY LIST
+  FOR each shift IN shift_schedule DO
+    L ← left_shift(L, shift)
+    R ← left_shift(R, shift)
+    round_key ← permute(L + R, PC2)
+    APPEND round_key TO round_keys
+  ENDFOR
+
+  plaintext ← ""
+
+  FOR each block IN split(raw, 8 bytes) DO
+    bits ← string_to_bits(block)
+
+    bits ← permute(bits, IP)
+    L ← bits[0..31]
+    R ← bits[32..63]
+
+    FOR i FROM 15 DOWNTO 0 DO
+      L, R ← des_round(L, R, round_keys[i])
+    ENDFOR
+
+    pre_output ← R + L
+    decrypted_bits ← permute(pre_output, IP_INVERSE)
+    plaintext ← plaintext + bits_to_string(decrypted_bits)
+  ENDFOR
+
+  plaintext ← unpad_text(plaintext)
+
+  DISPLAY "Decrypted Plaintext: ", plaintext
+
+END

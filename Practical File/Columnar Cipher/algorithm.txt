@@ -1,0 +1,45 @@
+repeat
+    print menu
+    read ch
+
+    if ch == 1 then
+        read plain_text
+        read key
+
+        text ← removeSpaces(plain_text)
+        cols ← length(key)
+
+        matrix ← EMPTY LIST
+        for i from 0 to length(text)-1 step cols do
+            append text[i..i+cols-1] as list to matrix
+        end for
+
+        print "The Matrix is as follows :-"
+        print "Key:   " + join(key, " ")
+        print "       " + repeat("-", 2 * cols)
+        for each row in matrix do
+            print "       " + join(row, " ")
+        end for
+
+        order ← getOrder(key)
+
+        cipher_text ← ""
+        for num from 1 to cols do
+            colIndex ← indexOf(order, num)
+            for each row in matrix do
+                if colIndex < length(row) then
+                    cipher_text ← cipher_text + row[colIndex]
+                end if
+            end for
+        end for
+
+        print "Encrypted Text: " + cipher_text
+
+    else if ch == 0 then
+        exit loop
+
+    else
+        print "Invalid choice"
+    end if
+
+until ch == 0
